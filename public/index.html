@@ -1,0 +1,102 @@
+<!DOCTYPE>
+<html>
+    
+    <head>
+        <!-- Metadata and links to Bootstrap and angular files -->
+        <title>Music Library</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="controller.js"></script>
+    </head>
+
+    <body>
+        <div class="container" ng-app='myApp' ng-controller='myCtrl'>
+            
+            <!-- Title of the website -->
+            <h1 class="jumbotron row" style="background-color:paleturquoise; text-align:center">Music Library<span class="glyphicon glyphicon-music"></span></h1>
+
+            <!-- Search panel -->
+            <div  class="row well well-sm">
+                <!-- Search box -->
+                <div class="col-sm-8">
+                    <input type="text" ng-model="searchString" class="form-control" placeholder="Search...">    
+                </div>    
+
+                <!-- Clear button -->
+                <div class="col-sm-2">
+                    <button ng-click='searchString=""' style="background-color:paleturquoise" class="btn btn-basic btn-block">Clear Search</button>    
+                </div>    
+
+                <!-- Add Button -->
+                <div class="col-sm-2">
+                    <button ng-click='addPanelShow=true' style="background-color:paleturquoise" class="btn btn-basic btn-block">Add Track</button>    
+                </div>    
+            </div>    
+            
+            <!-- Add Panel -->
+            <div ng-show="addPanelShow" class="row well well-sm">
+                <!-- Track name input box -->
+                <div class="col-sm-4">
+                    <input type="text" ng-model="addedName" class="form-control" placeholder="Enter Track">
+                </div>
+
+                <!-- Artist name input box -->
+                <div class="col-sm-3">
+                    <input type="text" ng-model="addedArtist" class="form-control" placeholder="Enter Artist">
+                </div>
+
+                <!-- Album name input box -->
+                <div class="col-sm-3">
+                    <input type="text" ng-model="addedAlbum" class="form-control" placeholder="Enter Album">
+                </div>
+
+                <!-- Save button: -->
+                <div class="col-sm-1">
+                    <button ng-click="saveTrack()" style="background-color:paleturquoise" class="btn btn-basic btn-block">Save</button>
+                </div>
+
+                <!-- Cancel button -->
+                <div class="col-sm-1">
+                    <button ng-click="cancelAdd()" style="background-color:paleturquoise" class="btn btn-basic btn-block">Cancel</button>
+                </div>
+            </div>
+
+
+            <!-- Grid to show tracks list-->
+            <div>
+
+                <!-- Headers -->
+                <div class="row panel panel-heading h5">
+                    <div class="col-sm-1"><strong></div>
+                    <div class="col-sm-3">Name</div>
+                    <div class="col-sm-3">Artist</div>
+                    <div class="col-sm-3">Album</div>
+                    <div class="col-sm-1">Like</div>
+                    <div class="col-sm-1">Delete</strong></div>
+                </div>
+                
+                <!-- List -->
+                <div class="row panel" ng-repeat="c in catalog | filter:searchString">
+                    
+                    <!-- Data from angular controllers -->
+                    <div class="col-sm-1">{{$index+1}}</div>
+                    <div class="col-sm-3">{{c.name}}</div>
+                    <div class="col-sm-3">{{c.artist}}</div>
+                    <div class="col-sm-3">{{c.album}}</div>
+
+                    <!-- Rate button -->
+                    <div ng-click="changeRating($index)" class="col-sm-1 btn">
+                        <span style="color:{{c.rating}}" class="glyphicon glyphicon-thumbs-up"></span>
+                    </div>
+
+                    <!-- Delete button -->
+                    <div ng-click="deleteTrack($index)" class="col-sm-1 btn">
+                        <span style="color:red" class="glyphicon glyphicon-trash"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
